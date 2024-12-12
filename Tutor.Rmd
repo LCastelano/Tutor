@@ -1,0 +1,60 @@
+---
+title: "Iris Multivariada"
+author: "Lucas Castelano"
+date: "2024-12-12"
+output: html_document
+---
+
+---
+
+```{r}
+library(plyr)
+```
+
+
+```{r}
+library(ggplot2)
+library(gg3D)
+library(dplyr)
+library(magrittr)
+```
+
+Vamos iniciar com um conjunto de dados simples 'iris'.
+
+---
+
+> ### Organizar dados.
+
+> #### **COLUNAS**
+
+##### COMO MUDAR AS COLUNAS DE POSIÇÃO?
+
+* Ordenando através das posições do df.
+
+```{r}
+# Ordena o cj de dados da última coluna para a primeira
+iris.ord <- iris[5:1]
+
+# Ordena de acordo com as posições desejadas
+iris.ord <- iris.ord[5:1]
+
+```
+
+* Utilizando o pacote **dply**:
+  * Função **select()**: Manter ou remover colunas usando seus nomes ou tipos.
+
+```{r}
+# Sem PIPE
+# Adiciona um vetor com os nomes das colunas na ordem desejada:
+ex1 <- select(iris, c(Species, Petal.Width, Sepal.Width, Sepal.Length, Petal.Length))
+
+# com PIPE
+# Adiciona diretamente cada coluna na ordem desejada:
+ex2 <- iris %>%
+  select(Species, Sepal.Width, Petal.Width, Sepal.Length, Petal.Length)
+
+```
+
+##### COMO A POSIÇÃO DOS ELEMENTOS DE UMA COLUNA?
+
+* Alterar a posição dos elementos de uma coluna em um df altera necessariamente os elementos correspondentes nas demais colunas?
