@@ -81,9 +81,19 @@ ex2 <- iris %>%
 * Função **pull()**: remove uma coluna na forma de vetor.
 
 ```{r}
-ex1 %>% pull(alter1) #usando o nome da coluna a ser extraida
-ex1 %>% pull(1) # usando o índice da coluna da esquerda para direita
+ex1 %>% pull("Species") #usando o nome da coluna a ser extraida
+ex1 %>% pull("Petal.Width") # usando o índice da coluna da esquerda para direita
 ex1 %>% pull(-5) #usando o índice da coluna da direita para esquerda
+```
+
+
+* Função **mutate()** adiciona uma coluna baseado em operações matemáticas pré-existentes.
+
+```{r}
+ex1 %>% mutate(quadPW = sqrt(Petal.Width)) # Adiciona uma coluna do quadrado de Petal.Length.
+
+ex2 %>%  mutate(quadPL = sqrt(Petal.Length), quadPW = sqrt(Petal.Width)) # adiciona duas colunas solicitadas
+
 ```
 
 
@@ -93,8 +103,32 @@ ex1 %>% pull(-5) #usando o índice da coluna da direita para esquerda
 
 ```{r}
 # Seleciona as colunas Sepal.Width e alter3, filtra Sepal.Width maior ou igual a 3 ou alter3 maior ou igual a 5.5 e retorna o resultado organizado do maior para o menor na coluna Sepal.Width.
-ex1 %>%  select(Sepal.Width, alter3) %>% 
-  filter(Sepal.Width >= 3 | alter3 >= 5.5) %>% arrange(Sepal.Width)
+ex1 %>%  select(Sepal.Width, Sepal.Length) %>% 
+  filter(Sepal.Width >= 3 | Sepal.Length >= 5.5) %>% arrange(-Sepal.Width)
+```
+
+* **apply()**Aplica a função nas linhas ou colunas.
+
+```{r}
+                                                                                              summary(iris)
+
+apply(iris[1:4], 1, sum) # 1 linhas, soma todas as linhas. Como há 150 linhas, retornará 150 resultados.
+
+apply(iris[1:4], 2, sum) # 2 colunas, soma todas as colunas. Como há 4 colunas, retorna 4 resultados.
+
+
+apply(iris[1:4], 1:2, sum) # 1:2 linhas e colunas
+```
+
+```{r}
+iris %>% group_by(Species) %>% summarise(Sepal.Length >= 4.5) %>% 
+  ddply(.(Species), summarise,
+        media = mean(Sepal.Length))
+
+iris %>% ggplot(aes(x=Sepal.Length, y= Sepal.Width, colour = Species))+
+  geom_point()+
+  geom_smooth(method = 'lm', se = F)+
+  theme_bw()
 ```
 
 
