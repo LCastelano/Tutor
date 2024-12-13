@@ -89,4 +89,13 @@ ex1 %>% pull(-5) #usando o índice da coluna da direita para esquerda
 
 ##### COMO ALTERAR A POSIÇÃO DOS ELEMENTOS DE UMA COLUNA?
 
+* Função **arrange()** organiza em ordem.
+
+```{r}
+# Seleciona as colunas Sepal.Width e alter3, filtra Sepal.Width maior ou igual a 3 ou alter3 maior ou igual a 5.5 e retorna o resultado organizado do maior para o menor na coluna Sepal.Width.
+ex1 %>%  select(Sepal.Width, alter3) %>% 
+  filter(Sepal.Width >= 3 | alter3 >= 5.5) %>% arrange(Sepal.Width)
+```
+
+
 * Alterar a posição dos elementos de uma coluna em um df altera necessariamente os elementos correspondentes nas demais colunas?
