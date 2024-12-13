@@ -34,8 +34,6 @@ Instalar o pct magrittr. Agora, através dos dados 'iris' vamos selecionar duas 
 iris %>% select(Species, Sepal.Width) %>%
   filter(Sepal.Width >= 3) %>% ddply(.(Species), summarise,
                                      n = sum(!is.na(Sepal.Width)))
-
-# %>% sum() %>% table() %>% data.frame()
 ```
 
 
