@@ -45,11 +45,11 @@ teste <- iris
 
 names(teste)[5] <- 'Especies'
 
-colnames(ex1)[2] <- 'mudou'; head(ex1)
-names(ex1)[3] <- 'mudoutbm';head(ex1)
-names(ex1)[4]<- c('aquitbm'); head(ex1)
+colnames(ex1)[2] <- 'mudou';
+names(ex1)[3] <- 'mudoutbm';
+names(ex1)[4]<- c('aquitbm');
 ex1 <- ex2
-names(ex1)[c(1,3,5)] <- c('alter1', 'alter2', 'alter3'); head(ex1)
+names(ex1)[c(1,3,5)] <- c('alter1', 'alter2', 'alter3')
 ```
 
 
@@ -63,11 +63,10 @@ iris.ord <- iris[5:1]
 
 # Ordena de acordo com as posições desejadas
 iris.ord <- iris.ord[c(1,3,5,4,2)]
-
 ```
 
-* Utilizando o pacote **dply**:
-  * Função **select()**: Manter ou remover colunas usando seus nomes ou tipos.
+Utilizando o pacote **dply**:
+* Função **select()**: Manter ou remover colunas usando seus nomes ou tipos.
 
 ```{r}
 # Sem PIPE
@@ -79,6 +78,14 @@ ex2 <- iris %>%
   select(Species, Sepal.Width, Petal.Width, Petal.Length, Sepal.Length)
 
 ```
+* Função **pull()**: remove uma coluna na forma de vetor.
+
+```{r}
+ex1 %>% pull(alter1) #usando o nome da coluna a ser extraida
+ex1 %>% pull(1) # usando o índice da coluna da esquerda para direita
+ex1 %>% pull(-5) #usando o índice da coluna da direita para esquerda
+```
+
 
 ##### COMO ALTERAR A POSIÇÃO DOS ELEMENTOS DE UMA COLUNA?
 
