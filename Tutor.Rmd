@@ -44,6 +44,12 @@ iris %>% select(Species, Sepal.Width) %>%
 teste <- iris
 
 names(teste)[5] <- 'Especies'
+
+colnames(ex1)[2] <- 'mudou'; head(ex1)
+names(ex1)[3] <- 'mudoutbm';head(ex1)
+names(ex1)[4]<- c('aquitbm'); head(ex1)
+ex1 <- ex2
+names(ex1)[c(1,3,5)] <- c('alter1', 'alter2', 'alter3'); head(ex1)
 ```
 
 
@@ -69,22 +75,11 @@ iris.ord <- iris.ord[c(1,3,5,4,2)]
 ex1 <- select(iris, c(Species, Petal.Width, Sepal.Width, Sepal.Length, Petal.Length))
 
 # com PIPE
-# Adiciona diretamente cada coluna na ordem desejada:
 ex2 <- iris %>%
-  select(Species, Sepal.Width, Petal.Width, Sepal.Length, Petal.Length)
-
-dados <- ddply(iris, .(Species), summarise,
-                n = sum(!is.na(Species)),
-                f.rel = sum(!is.na(Species))/sum(sum(!is.na(Species))),
-                media = mean(Petal.Length))
-
-names(dist.f)[2] <- 'freq.abs'
-dist.f$freq.rel <- dist.f$freq.abs/sum(dist.f$freq.abs)
-
-df <- data.frame(table(iris$Species))
+  select(Species, Sepal.Width, Petal.Width, Petal.Length, Sepal.Length)
 
 ```
 
-##### COMO A POSIÇÃO DOS ELEMENTOS DE UMA COLUNA?
+##### COMO ALTERAR A POSIÇÃO DOS ELEMENTOS DE UMA COLUNA?
 
 * Alterar a posição dos elementos de uma coluna em um df altera necessariamente os elementos correspondentes nas demais colunas?
