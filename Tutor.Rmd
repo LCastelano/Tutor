@@ -27,6 +27,28 @@ Vamos iniciar com um conjunto de dados simples 'iris'.
 
 > #### **COLUNAS**
 
+##### OPERADOR PIPE
+Instalar o pct magrittr. Agora, através dos dados 'iris' vamos selecionar duas colunas e aplicar um filtro nelas. Logo após vamos fazer uma lista agrupada em 'Species' cuja única coluna seja o número de ocorrência (frequência absoluta) de cada espécie.
+
+```{r}
+iris %>% select(Species, Sepal.Width) %>%
+  filter(Sepal.Width >= 3) %>% ddply(.(Species), summarise,
+                                     n = sum(!is.na(Sepal.Width)))
+
+# %>% sum() %>% table() %>% data.frame()
+```
+
+
+##### COMO ALTERAR OS NOMES DAS COLUNAS?
+
+* Usando o índice da coluna:
+```{r}
+teste <- iris
+
+names(teste)[5] <- 'Especies'
+```
+
+
 ##### COMO MUDAR AS COLUNAS DE POSIÇÃO?
 
 * Ordenando através das posições do df.
@@ -36,7 +58,7 @@ Vamos iniciar com um conjunto de dados simples 'iris'.
 iris.ord <- iris[5:1]
 
 # Ordena de acordo com as posições desejadas
-iris.ord <- iris.ord[5:1]
+iris.ord <- iris.ord[c(1,3,5,4,2)]
 
 ```
 
@@ -52,6 +74,16 @@ ex1 <- select(iris, c(Species, Petal.Width, Sepal.Width, Sepal.Length, Petal.Len
 # Adiciona diretamente cada coluna na ordem desejada:
 ex2 <- iris %>%
   select(Species, Sepal.Width, Petal.Width, Sepal.Length, Petal.Length)
+
+dados <- ddply(iris, .(Species), summarise,
+                n = sum(!is.na(Species)),
+                f.rel = sum(!is.na(Species))/sum(sum(!is.na(Species))),
+                media = mean(Petal.Length))
+
+names(dist.f)[2] <- 'freq.abs'
+dist.f$freq.rel <- dist.f$freq.abs/sum(dist.f$freq.abs)
+
+df <- data.frame(table(iris$Species))
 
 ```
 
