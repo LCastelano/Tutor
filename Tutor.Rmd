@@ -99,7 +99,7 @@ ex2 %>%  mutate(quadPL = sqrt(Petal.Length), quadPW = sqrt(Petal.Width)) # adici
 
 ##### COMO ALTERAR A POSIÇÃO DOS ELEMENTOS DE UMA COLUNA?
 
-* Função **arrange()** organiza em ordem.
+* Função **arrange()** organiza em ordem. O que muda em uma coluna é seguido por todas as outras, não embaralha linhas
 
 ```{r}
 # Seleciona as colunas Sepal.Width e alter3, filtra Sepal.Width maior ou igual a 3 ou alter3 maior ou igual a 5.5 e retorna o resultado organizado do maior para o menor na coluna Sepal.Width.
@@ -116,7 +116,6 @@ apply(iris[1:4], 1, sum) # 1 linhas, soma todas as linhas. Como há 150 linhas, 
 
 apply(iris[1:4], 2, sum) # 2 colunas, soma todas as colunas. Como há 4 colunas, retorna 4 resultados.
 
-
 apply(iris[1:4], 1:2, sum) # 1:2 linhas e colunas
 ```
 
@@ -132,4 +131,12 @@ iris %>% ggplot(aes(x=Sepal.Length, y= Sepal.Width, colour = Species))+
 ```
 
 
-* Alterar a posição dos elementos de uma coluna em um df altera necessariamente os elementos correspondentes nas demais colunas?
+* Como alterar os elementos de uma coluna sem afetar as demais?
+
+* Função **group_by()**: Agrupa dados de acordo com uma coluna.
+
+```{r}
+iris %>% group_by(Species) %>%
+summarise(Petal.Length = mean(Petal.Length))
+# A sintaxe parece muito com a função ddply (plyr): ddply(dados, .(var.agrupamento), summarise, instruções)
+```
