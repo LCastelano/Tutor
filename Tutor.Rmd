@@ -121,9 +121,15 @@ apply(iris[1:4], 1:2, sum) # 1:2 linhas e colunas
 ```
 
 ```{r}
-iris %>% group_by(Species) %>% filter(Sepal.Length >= 4.5) %>% 
+dados <- iris %>% group_by(Species) %>% filter(Sepal.Length >= 4.5) %>% 
   ddply(.(Species), summarise,
         media = mean(Sepal.Length))
+
+mdl <- lm(Sepal.Length ~ Species, iris)
+anova(mdl)
+
+library(agricolae)
+tky <- HSD.test(mdl, trt = 'Species')
 
 iris %>% ggplot(aes(x=Sepal.Length, y= Sepal.Width, colour = Species))+
   geom_point()+
