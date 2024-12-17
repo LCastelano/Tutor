@@ -152,3 +152,43 @@ summarise(Petal.Length = mean(Petal.Length))
 
 Imagine que a interação retorne um valor verdadeiro que pode ser influenciado pelo tempo. Esse tipo de pensamento só se aplica em sistemas biológicos complexos, já que são capazes de promover mudanças evolutivas significativas. Imagine tbm que parte da seleção seja feita pelo homem e parte pelo tempo para aprimoremento 'in loco'. Ou seja, a cultivar "A" distribuída em 4 locais diferentes, com o tempo, passa a ser "A1", "A2", "A3", e "A4" ('especiação' no sentido de adaptação), cada qual com características diferentes que potencializa sua performance nas diferentes regiões nas quais foram adaptadas. Se o tempo aprimorasse cada material (a interação dinâmica da interação), e cada vez mais o material se tornasse adaptado, a mesma cultivar poderia se adaptar às diferentes áeras de diferentes produtores, tornando assim, cultivares especializadas para cada caso particular e não mais cultivares genéricas que apresentassem média satisfatória em grandes extensões de micro e macro regiões. O problema dessa ideia é que vai na contra-mão do desenvolvimento anual de diferentes cultivares, o que impactaria diretamente o mercado de produção de sementes como ele é.
 Por outro lado, seria uma evolução na forma com a qual lidamos com sementes.
+
+> #### O que é o teste estatístito do x2 (qui-quadrado)?
+
+Teste não-paramétrico. Geralmente, utilizado para avaliar associação entre duas ou mais variáveis qualitativas categóricas, além de problemas que envolvem proporções. A ídeia é verificar se existe associação entre as variáveis. 
+
+Vamos aprender com um exemplo clássico de genética do livros fundamentos da genética Snustad & Simons - Fundamentos da Genética - 7ed; e um exemplo de prova UFG - Introdução ao R - Prof. Dra. Bruna Mendes.
+
+EXEMPLO 01: Proporções Mendelianas.
+
+Frequência observada por Mendel para cada fenótipo:
+
+H0 = A proporçõe observada é estatisticamente igual à 9:3:3:1;
+H1 = A proporção observada é diferente de 9:3:3:1.
+
+Precisamos organizar os dados em uma tabela que contenha variáveis categóricas e suas frequências.
+
+Inicialmente, vamos recordar que as proporções fenotípicas medelianas para duas características independentes é de 9:3:3:1. Como sabemos que cada fenótipo é diferente, podemos nomeá-los como a, b, c, d. Quantos as linhas será frequência esperada e frequência observada.
+
+Frequência observada por Mendel
+
+```{r}
+freq.mendel <- matrix(c(556*9/16,556*3/16,556*3/16,556*1/16,315,108,101,32), byrow = T, nrow = 2)
+colnames(freq.mendel)<- c('a','b','c','d')
+rownames(freq.mendel)<- c('freq.esp','freq.obs')
+
+mendel <- chisq.test(freq.mendel)
+```
+P-value = 0.971, portanto, não rejeitamos H0, ou seja, a frequência observada é estatisticamente igual a esperada.
+
+
+Frequência observada por DeVries
+
+```{r}
+freq.devries <- matrix(c(158*9/16, 158*3/16, 158*3/16, 158*1/16, 70, 23, 46, 19), byrow = T, nrow = 2)
+colnames(freq.devries)<- c('a', 'b', 'c', 'd')
+rownames(freq.devries)<- c('freq.esp','freq.obs')
+
+devries <- chisq.test(freq.devries)
+```
+P-value = 0.02327, portanto, rejeitamos H0, ou seja, a frequência observada não é estatisticamente igual a esperada.
