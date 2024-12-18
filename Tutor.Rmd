@@ -17,6 +17,7 @@ library(ggplot2)
 library(gg3D)
 library(dplyr)
 library(magrittr)
+library(readxl)
 ```
 
 Vamos iniciar com um conjunto de dados simples 'iris'.
@@ -159,7 +160,7 @@ Teste não-paramétrico. Geralmente, utilizado para avaliar associação entre d
 
 Vamos aprender com um exemplo clássico de genética do livros fundamentos da genética Snustad & Simons - Fundamentos da Genética - 7ed; e um exemplo de prova UFG - Introdução ao R - Prof. Dra. Bruna Mendes.
 
-EXEMPLO 01: Proporções Mendelianas.
+EXEMPLO: frequências observadas por Mendel e DeVries.
 
 Frequência observada por Mendel para cada fenótipo:
 
@@ -177,7 +178,7 @@ freq.mendel <- matrix(c(556*9/16,556*3/16,556*3/16,556*1/16,315,108,101,32), byr
 colnames(freq.mendel)<- c('a','b','c','d')
 rownames(freq.mendel)<- c('freq.esp','freq.obs')
 
-mendel <- chisq.test(freq.mendel)
+mendel <- chisq.test(freq.mendel, correct = F)
 ```
 P-value = 0.971, portanto, não rejeitamos H0, ou seja, a frequência observada é estatisticamente igual a esperada.
 
@@ -189,6 +190,25 @@ freq.devries <- matrix(c(158*9/16, 158*3/16, 158*3/16, 158*1/16, 70, 23, 46, 19)
 colnames(freq.devries)<- c('a', 'b', 'c', 'd')
 rownames(freq.devries)<- c('freq.esp','freq.obs')
 
-devries <- chisq.test(freq.devries)
+devries <- chisq.test(freq.devries, correct = F)
 ```
 P-value = 0.02327, portanto, rejeitamos H0, ou seja, a frequência observada não é estatisticamente igual a esperada.
+
+Antes de prosseguir aqui cabe um consideração importante. Note que criamos vetores manualmente para a matriz (o que poderia ter sido num data frame) mas, geralmente, esses dados chegam através de uma tabela na qual consta cada observação. É preciso entender uma forma de resumir uma grande tabela nas frequências das variáveis categóricas que serão avaliadas.
+
+RESOLVA - Uso do teste do qui-quadrado: cap 3 Mendelismo | Princípios básicos da herança pag. 49
+
+Quando tomateiros geneticamente puros de frutos esféricos foram cruzados com outros geneticamente puros de frutos ovais, todas as plantas da f1 tinham frutos esféricos. Em seguida, essas plantas da f1 foram intercruzadas para produzir uma geração f2 constituída de 73 plantas de frutos esféricos e 11 de frutos ovais. Esses resultados são compatíveis com a hipótese de que o formato dos frutos em tomates é controlado por um único gene?
+
+Se for um único gene, e estiver de acordo com a primeira lei de Mendel, então temos que a proporção fenotípica é de 3:1.
+
+```{r}
+
+tomate <- matrix(c(84*3/4, 84*1/4, 73, 11), byrow = T, nrow = 2)
+
+colnames(tomate) <- c('P3','P1')
+rownames(tomate) <- c('freq.esp', 'freq.ob')
+
+chisq.test(tomate, correct = F)
+```
+Rejeitamos H0, frequência observada não é estatisticamente igual à esperada (mendeliana) com 95% de confiança. O que nos leva a pensar que pode ser que essa herança se dê por mais de um gene.
